@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopGatheringRestrictions", "ShopGatheringRestrictions\ShopGatheringRestrictions.csproj", "{656D125B-E034-4270-AA7F-124CD03FEB6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopGatheringRestrictionsApi", "ShopGatheringRestrictionsApi\ShopGatheringRestrictionsApi.csproj", "{0B7CF913-43D3-4AED-9A9C-672B20A96BDC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{656D125B-E034-4270-AA7F-124CD03FEB6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656D125B-E034-4270-AA7F-124CD03FEB6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656D125B-E034-4270-AA7F-124CD03FEB6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656D125B-E034-4270-AA7F-124CD03FEB6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B7CF913-43D3-4AED-9A9C-672B20A96BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B7CF913-43D3-4AED-9A9C-672B20A96BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B7CF913-43D3-4AED-9A9C-672B20A96BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B7CF913-43D3-4AED-9A9C-672B20A96BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {453FC7F0-0005-4239-844C-8A176A4156C5}
+	EndGlobalSection
+EndGlobal
