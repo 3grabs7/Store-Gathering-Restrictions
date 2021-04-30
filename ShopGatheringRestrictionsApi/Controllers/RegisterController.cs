@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShopGatheringRestrictionsApi.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShopGatheringRestrictionsApi.Controllers
@@ -20,6 +21,18 @@ namespace ShopGatheringRestrictionsApi.Controllers
         {
             _context = context;
         }
+
+        [HttpGet("[action]")]
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public async Task<ActionResult> Get()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            var result = _context.Stores
+                .Select(s => s.Name)
+                .AsNoTracking();
+            return Ok(result);
+        }
+
 
         [HttpGet("[action]/{store}")]
         public async Task<ActionResult<Store>> Get(string store)

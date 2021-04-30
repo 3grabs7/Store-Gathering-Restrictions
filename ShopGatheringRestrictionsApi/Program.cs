@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ShopGatheringRestrictionsApi
 {
@@ -13,7 +9,9 @@ namespace ShopGatheringRestrictionsApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            SeedDatabase(host);
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +20,14 @@ namespace ShopGatheringRestrictionsApi
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private async static void SeedDatabase(IHost host)
+        {
+            using (IServiceScope scope = host.Services.CreateScope())
+            {
+                IServiceProvider services = scope.ServiceProvider;
+                await Seed.Start(services);
+            }
+        }
     }
 }
