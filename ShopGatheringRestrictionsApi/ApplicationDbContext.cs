@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ShopGatheringRestrictionsApi.Models;
 
 namespace ShopGatheringRestrictionsApi
 {
@@ -10,6 +7,9 @@ namespace ShopGatheringRestrictionsApi
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-
+        public DbSet<Store> Stores { get; set; }
+        public DbSet<Section> Sections { get; set; }
+        public DbSet<Enter> Enters { get; set; }
+        public DbSet<Exit> Exits { get; set; }
     }
 }
