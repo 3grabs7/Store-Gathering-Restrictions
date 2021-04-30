@@ -23,12 +23,21 @@ namespace ShopGatheringRestrictions.Pages
         }
 
         [BindProperty]
+        public IEnumerable<string> StoreNames { get; set; }
+
+        [BindProperty]
         public Store Store { get; set; }
+
         [BindProperty]
         public IEnumerable<Section> Sections { get; set; }
 
         public async Task<ActionResult> OnGetAsync(string store)
         {
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync($"{ApiConstants.Href}/Get");
+                var model = await response.Content.ReadAsStringAsync();
+            }
             if (string.IsNullOrWhiteSpace(store))
             {
                 return Page();

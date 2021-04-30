@@ -23,13 +23,12 @@ namespace ShopGatheringRestrictionsApi.Controllers
         }
 
         [HttpGet("[action]")]
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<ActionResult> Get()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            var result = _context.Stores
+            var result = await _context.Stores
                 .Select(s => s.Name)
-                .AsNoTracking();
+                .AsNoTracking()
+                .ToListAsync();
             return Ok(result);
         }
 

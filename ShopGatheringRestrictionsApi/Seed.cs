@@ -16,54 +16,46 @@ namespace ShopGatheringRestrictionsApi
         private const string MOCK_DATA_SECTIONS_FILE_PATH = @"./MockData/MockDataSections.json";
         private static ApplicationDbContext _context;
         private static Random rnd = new Random();
-        private static IEnumerable<string> StoreNames { get; set; }
-        private static IEnumerable<string> SectionNames { get; set; }
-        private enum Section
-        {
+        private static IEnumerable<Store> StoreNames { get; set; }
+        private static IEnumerable<Section> SectionNames { get; set; }
 
-        }
         public async static Task Start(IServiceProvider services)
         {
             _context = services.GetRequiredService<ApplicationDbContext>();
             await _context.Database.EnsureDeletedAsync();
             await _context.Database.EnsureCreatedAsync();
 
-            StoreNames = JsonConvert.DeserializeObject<IEnumerable<StoreNames>>(await File.ReadAllTextAsync(MOCK_DATA_STORES_FILE_PATH))
-                .Select(s => s.Store)
-                .Distinct();
-            SectionNames = JsonConvert.DeserializeObject<IEnumerable<SectionNames>>(await File.ReadAllTextAsync(MOCK_DATA_SECTIONS_FILE_PATH))
-                .Select(s => s.Section)
-                .Distinct();
+            StoreNames = JsonConvert.DeserializeObject<IEnumerable<Store>>(await File.ReadAllTextAsync(MOCK_DATA_STORES_FILE_PATH))
+                .GroupBy(s => s.Name).Select(g => g.First());
+            SectionNames = JsonConvert.DeserializeObject<IEnumerable<Section>>(await File.ReadAllTextAsync(MOCK_DATA_SECTIONS_FILE_PATH))
+                .GroupBy(s => s.Name).Select(g => g.First());
 
-            CreateStores();
+            await CreateStores();
+        }
+
+        private async static Task CreateStores()
+        {
+            for (int i = 0; i < NUMBER_OF_STORES; i++)
+            {
+                var numberOfSections = rnd.Next(1, 5);
+                var sections = new List<Section>();
+                for (int j = 0; j < numberOfSections; j++)
+                {
+                    string pick = null;
+                    while (pick == null || sections.Any(s => s != null && s.Name == pick))
+                    {
+                        pick = SectionNames.Skip(rnd.Next(0, SectionNames.Count())).First().Name;
+                    }
+                    sections.Add(new Section() { Name = pick });
+                }
+                var store = StoreNames.Skip(rnd.Next(0, StoreNames.Count())).First();
+                store.Sections = sections;
+                await _context.AddAsync(store);
+                sections = new List<Section>();
+            }
             await _context.SaveChangesAsync();
         }
 
-        private static void CreateStores()
-        {
-            var numberOfSections = rnd.Next(1, 5);
-            var sections = new string[numberOfSections];
-            for (int i = 0; i < SectionNames.Count(); i++)
-            {
-                string pick = null;
-                while (pick == null || !SectionNames.Contains(pick))
-                {
-                    pick = SectionNames.Skip(rnd.Next(0, SectionNames.Count())).First();
-                }
-                sections[i] = pick;
-            }
-            for (int i = 0; i < NUMBER_OF_STORES; i++)
-            {
-                var store = new Store()
-                {
-                    Name = StoreNames.Skip(rnd.Next(0, StoreNames.Count())).First()
-                };
-            }
-        }
-        private static void GenerateSections(Store store)
-        {
-
-        }
     }
     public class StoreNames
     {
