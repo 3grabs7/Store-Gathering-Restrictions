@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Api.Models;
+using Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,22 +47,21 @@ namespace Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("[action]/{logging}")]
-        public async Task<ActionResult> Log(Logging logging)
+        [HttpPost("[action]")]
+        public async Task<ActionResult> Log([FromBody] Logging logging)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values);
+
             var store = await _context.Stores
                 .FirstOrDefaultAsync(s => s.Name == logging.Store);
             if (store == default)
-            {
                 return NotFound(new { Message = $"Store '{logging.Store}' not found." });
-            }
 
             var section = await _context.Sections
                 .FirstOrDefaultAsync(s => s.Name == logging.Section && s.Store == store);
             if (section == default)
-            {
                 return NotFound(new { Message = $"Section '{logging.Section}' not found." });
-            }
 
             switch (logging.Direction)
             {

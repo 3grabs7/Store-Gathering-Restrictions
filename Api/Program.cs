@@ -10,7 +10,11 @@ namespace Api
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            SeedDatabase(host);
+            // *********************************************
+            // *** Uncomment to reset an reseed database ***
+            // *********************************************
+            // SeedDatabase(host);
+            // *********************************************
             host.Run();
         }
 

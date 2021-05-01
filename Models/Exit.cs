@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Api.Models
+namespace Models
 {
-    public class Enter
+    public class Exit
     {
         public int Id { get; set; }
         public Section Section { get; set; }

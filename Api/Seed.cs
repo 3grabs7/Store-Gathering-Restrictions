@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Api.Models;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,8 +16,8 @@ namespace Api
         private const string MOCK_DATA_SECTIONS_FILE_PATH = @"./MockData/MockDataSections.json";
         private static ApplicationDbContext _context;
         private static Random rnd = new Random();
-        private static IEnumerable<Store> StoreNames { get; set; }
-        private static IEnumerable<Section> SectionNames { get; set; }
+        private static IEnumerable<Store> Stores { get; set; }
+        private static IEnumerable<Section> Sections { get; set; }
 
         public async static Task Start(IServiceProvider services)
         {
@@ -25,9 +25,9 @@ namespace Api
             await _context.Database.EnsureDeletedAsync();
             await _context.Database.EnsureCreatedAsync();
 
-            StoreNames = JsonConvert.DeserializeObject<IEnumerable<Store>>(await File.ReadAllTextAsync(MOCK_DATA_STORES_FILE_PATH))
+            Stores = JsonConvert.DeserializeObject<IEnumerable<Store>>(await File.ReadAllTextAsync(MOCK_DATA_STORES_FILE_PATH))
                 .GroupBy(s => s.Name).Select(g => g.First());
-            SectionNames = JsonConvert.DeserializeObject<IEnumerable<Section>>(await File.ReadAllTextAsync(MOCK_DATA_SECTIONS_FILE_PATH))
+            Sections = JsonConvert.DeserializeObject<IEnumerable<Section>>(await File.ReadAllTextAsync(MOCK_DATA_SECTIONS_FILE_PATH))
                 .GroupBy(s => s.Name).Select(g => g.First());
 
             await CreateStores();
@@ -35,6 +35,7 @@ namespace Api
 
         private async static Task CreateStores()
         {
+            var storeCount = Stores.Count();
             for (int i = 0; i < NUMBER_OF_STORES; i++)
             {
                 var numberOfSections = rnd.Next(1, 5);
@@ -44,11 +45,11 @@ namespace Api
                     string pick = null;
                     while (pick == null || sections.Any(s => s != null && s.Name == pick))
                     {
-                        pick = SectionNames.Skip(rnd.Next(0, SectionNames.Count())).First().Name;
+                        pick = Sections.Skip(rnd.Next(0, Sections.Count())).First().Name;
                     }
                     sections.Add(new Section() { Name = pick });
                 }
-                var store = StoreNames.Skip(rnd.Next(0, StoreNames.Count())).First();
+                var store = Stores.Skip(rnd.Next(0, storeCount)).First();
                 store.Sections = sections;
                 await _context.AddAsync(store);
                 sections = new List<Section>();
@@ -57,12 +58,5 @@ namespace Api
         }
 
     }
-    public class StoreNames
-    {
-        public string Store { get; set; }
-    }
-    public class SectionNames
-    {
-        public string Section { get; set; }
-    }
+
 }

@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Api.Models;
+using Models;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace WebApp.Pages
 {
@@ -29,7 +31,7 @@ namespace WebApp.Pages
         public Store Store { get; set; }
 
         [BindProperty]
-        public IEnumerable<Section> Sections { get; set; }
+        public IEnumerable<int> SectionCounts { get; set; }
 
         public async Task<ActionResult> OnGetAsync(string store)
         {
@@ -37,10 +39,13 @@ namespace WebApp.Pages
             {
                 var response = await client.GetAsync($"{ApiConstants.Href}/Get");
                 var model = await response.Content.ReadAsStringAsync();
+                StoreNames = model
+                    .Split(",")
+                    .Select(w => Regex.Replace(w, @"[^a-zA-Z\s]+", ""));
             }
             if (string.IsNullOrWhiteSpace(store))
             {
-                return Page();
+                store = StoreNames.First();
             }
 
             using (var client = new HttpClient())
@@ -48,10 +53,24 @@ namespace WebApp.Pages
                 var response = await client.GetAsync($"{ApiConstants.Href}/Get/{store}");
                 var model = await response.Content.ReadAsStringAsync();
                 Store = JsonConvert.DeserializeObject<Store>(model);
-                Sections = Store.Sections;
             }
-
+            SectionCounts = CalculatePeopleInStore();
             return Page();
         }
+
+
+        private IEnumerable<int> CalculatePeopleInStore()
+        {
+            var total = 0;
+            foreach (var section in Store.Sections)
+            {
+                var enters = section.Enters.Count();
+                var exits = section.Exits.Count();
+                yield return enters - exits;
+                total += (enters - exits);
+            }
+            yield return total;
+        }
+
     }
 }

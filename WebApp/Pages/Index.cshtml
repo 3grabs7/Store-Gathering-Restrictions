@@ -4,7 +4,46 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col">
+        <h2 class="card-header">@Model.Store.Name</h2>
+    </div>
+    <div class="col-3">
+        <div class="dropdown" style="width:100%">
+            <button class="btn btn-lg btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Choose store...
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @foreach (var storeName in Model.StoreNames)
+                {
+                    <a class="dropdown-item" asp-page="/Index" asp-route-store="@storeName">@storeName</a>
+                }
+            </div>
+        </div>
+    </div>
 </div>
+<div>
+    <h3 class="card-header">Number of people in each section of store</h3>
+</div>
+<ol class="list-group list-group-numbered">
+    @{var i = 0;}
+    @foreach (var section in Model.Store.Sections)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <h5 class="font-weight-bold">@(section.Name)</h5>
+                Warning goes here if any
+            </div>
+            <span class="badge bg-success text-white rounded-pill">@Model.SectionCounts.Skip(i).First()</span>
+        </li>
+        { i++; }
+    }
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+            <h5 class="font-weight-bold">Total</h5>
+            Warning goes here if any
+        </div>
+        <span class="badge bg-success text-white rounded-pill">@Model.SectionCounts.Last()</span>
+    </li>
+</ol>
+

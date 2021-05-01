@@ -1,4 +1,4 @@
-﻿namespace Api.Models
+﻿namespace Models
 {
     public class Logging
     {
