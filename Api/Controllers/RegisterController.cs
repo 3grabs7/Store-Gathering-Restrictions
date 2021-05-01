@@ -8,10 +8,6 @@ using System.Threading.Tasks;
 namespace Api.Controllers
 {
 
-    // enter ++ section timestamp
-    // exit -- section timestamp
-    // number of people in section = enter - exit
-
     [Route("api/[controller]")]
     [ApiController]
     public class RegisterController : ControllerBase

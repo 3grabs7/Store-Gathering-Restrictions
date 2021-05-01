@@ -1,0 +1,11 @@
+﻿@page
+@model WebApp.Pages.ApiNotLoadedModel
+@{
+}
+<h3>Api not loaded, restart with order : Api -> WebApp</h3>
+<p>@Model.Message</p>
+@foreach (var st in Model.StackTrace)
+{
+    <p>@st</p>
+}
+<p>@Model.Source</p>

@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System;
 
 namespace WebApp.Pages
 {
@@ -15,6 +16,7 @@ namespace WebApp.Pages
     {
         public static string Href = "http://localhost:40783/api/Register";
     }
+    [BindProperties]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
@@ -24,29 +26,36 @@ namespace WebApp.Pages
             _logger = logger;
         }
 
-        [BindProperty]
         public IEnumerable<string> StoreNames { get; set; }
-
-        [BindProperty]
         public Store Store { get; set; }
-
-        [BindProperty]
         public IEnumerable<int> SectionCounts { get; set; }
+        public double AlmostFullThreshhold { get; set; } = 0.8;
 
         public async Task<ActionResult> OnGetAsync(string store)
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync($"{ApiConstants.Href}/Get");
-                var model = await response.Content.ReadAsStringAsync();
-                StoreNames = model
-                    .Split(",")
-                    .Select(w => Regex.Replace(w, @"[^a-zA-Z\s]+", ""));
+                try
+                {
+                    var response = await client.GetAsync($"{ApiConstants.Href}/Get");
+                    var model = await response.Content.ReadAsStringAsync();
+                    StoreNames = model
+                        .Split(",")
+                        .Select(w => Regex.Replace(w, @"[^a-zA-Z\s]+", ""));
+                }
+                catch (Exception error)
+                {
+                    return RedirectToPage("/ApiNotLoaded", new
+                    {
+                        Message = error.Message,
+                        StackTrace = error.StackTrace,
+                        Source = error.Source
+                    });
+                }
             }
+
             if (string.IsNullOrWhiteSpace(store))
-            {
                 store = StoreNames.First();
-            }
 
             using (var client = new HttpClient())
             {

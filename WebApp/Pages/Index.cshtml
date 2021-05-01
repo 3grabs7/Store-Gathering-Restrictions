@@ -32,7 +32,8 @@
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
                 <h5 class="font-weight-bold">@(section.Name)</h5>
-                Warning goes here if any
+                @(Model.SectionCounts.Skip(i).First() >= Math.Floor(section.MaximumPeopleAllowed * Model.AlmostFullThreshhold) ?
+                  "Almost full warning" : "")
             </div>
             <span class="badge bg-success text-white rounded-pill">@Model.SectionCounts.Skip(i).First()</span>
         </li>

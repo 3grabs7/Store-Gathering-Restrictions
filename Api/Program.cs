@@ -13,7 +13,7 @@ namespace Api
             // *********************************************
             // *** Uncomment to reset an reseed database ***
             // *********************************************
-            // SeedDatabase(host);
+            SeedDatabase(host);
             // *********************************************
             host.Run();
         }
