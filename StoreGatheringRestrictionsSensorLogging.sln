@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopGatheringRestrictions", "ShopGatheringRestrictions\ShopGatheringRestrictions.csproj", "{656D125B-E034-4270-AA7F-124CD03FEB6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{656D125B-E034-4270-AA7F-124CD03FEB6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopGatheringRestrictionsApi", "ShopGatheringRestrictionsApi\ShopGatheringRestrictionsApi.csproj", "{0B7CF913-43D3-4AED-9A9C-672B20A96BDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{0B7CF913-43D3-4AED-9A9C-672B20A96BDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ShopGatheringRestrictionsApi.Models;
+using Api.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShopGatheringRestrictionsApi.Controllers
+namespace Api.Controllers
 {
 
     // enter ++ section timestamp

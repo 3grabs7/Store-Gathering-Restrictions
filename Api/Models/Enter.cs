@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShopGatheringRestrictionsApi.Models
+namespace Api.Models
 {
     public class Enter
     {

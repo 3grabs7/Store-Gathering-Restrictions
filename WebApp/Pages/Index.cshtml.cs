@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using ShopGatheringRestrictionsApi.Models;
+using Api.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ShopGatheringRestrictions.Pages
+namespace WebApp.Pages
 {
     public static class ApiConstants
     {

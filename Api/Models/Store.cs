@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ShopGatheringRestrictionsApi.Models
+namespace Api.Models
 {
     public class Store
     {

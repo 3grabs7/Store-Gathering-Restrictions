@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopGatheringRestrictionsApi.Models;
+using Api.Models;
 
-namespace ShopGatheringRestrictionsApi
+namespace Api
 {
     public class ApplicationDbContext : DbContext
     {

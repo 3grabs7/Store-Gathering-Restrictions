@@ -1,4 +1,4 @@
-﻿namespace ShopGatheringRestrictionsApi.Models
+﻿namespace Api.Models
 {
     public class Logging
     {

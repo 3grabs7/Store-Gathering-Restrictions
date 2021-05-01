@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 
-namespace ShopGatheringRestrictionsApi
+namespace Api
 {
     public class Program
     {
