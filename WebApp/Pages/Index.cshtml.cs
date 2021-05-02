@@ -81,5 +81,10 @@ namespace WebApp.Pages
             yield return total;
         }
 
+        private async Task StartTesting()
+        {
+            var test = new Testing(Store);
+            await test.Start(10, Pressure.Average);
+        }
     }
 }
